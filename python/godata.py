@@ -118,26 +118,31 @@ class StickyMaster(controller.Master):
                 for param in listParam:
                     keyvalue = param.split('=')
                     if len(keyvalue) == 1:
-                        jsondata = json.loads(keyvalue[0])
-                        jsondict = {}
-                        for i in jsondata:
-                            jsondict[str(i)] = str(jsondata[i]) + '*'
-                        newcontent = jsondict
-                    strParam += keyvalue[0]
-                    try:
-                        jsondata = json.loads(keyvalue[1])
-                        jsonlist = []
-                        jsondict = {}
-                        for i in jsondata:
-                            jsondict[str(i)] = str(jsondata[i]) + '*'
-                            jsonlist.append(i)
-                        keyvalue[1] = jsondict
-                        listParam[listParam.index(param)] = str(keyvalue[0])+'='+str(keyvalue[1])
-                        for key in jsonlist:
-                            strParam += key
-                        newcontenttag = 1
-                    except Exception as err:
-                        pass
+                        try:
+                            jsondata = json.loads(keyvalue[0])
+                            jsondict = {}
+                            for i in jsondata:
+                                jsondict[str(i)] = str(jsondata[i]) + '*'
+                                strParam += str(i)
+                            newcontent = jsondict
+                        except Exception as err:
+                            pass
+                    else:
+                        try:
+                            jsondata = json.loads(keyvalue[1])
+                            jsonlist = []
+                            jsondict = {}
+                            for i in jsondata:
+                                jsondict[str(i)] = str(jsondata[i]) + '*'
+                                jsonlist.append(i)
+                            keyvalue[1] = jsondict
+                            listParam[listParam.index(param)] = str(keyvalue[0])+'='+str(keyvalue[1])
+                            for key in jsonlist:
+                                strParam += key
+                            newcontenttag = 1
+                        except Exception as err:
+                            strParam += keyvalue[0]
+                            pass
                 if newcontenttag:
                     for i in listParam:
                         newcontent = newcontent + str(i)+'&'

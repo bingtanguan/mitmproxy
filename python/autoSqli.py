@@ -86,7 +86,7 @@ class SqlmapTask(object):
             return False
 
 def run():
-    test = SqlmapTask("http://192.168.0.61:8775")
+    test = SqlmapTask("http://192.168.0.50:8775")
     selectquery = 'select * from httpRequest where sqlistatus = "not start"'
     while True:
         cur.execute(selectquery)
